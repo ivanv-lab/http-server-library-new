@@ -33,7 +33,7 @@ public class ControllerSearcher {
 
         try(ScanResult scanResult = new ClassGraph()
                 .enableAnnotationInfo()
-                .acceptPackages("ru")
+                .acceptPackages("prod")
                 .scan()){
             for(ClassInfo classInfo: scanResult.getClassesWithAnnotation(RequestMapping.class)){
                 Class<?> controller = classInfo.loadClass();
