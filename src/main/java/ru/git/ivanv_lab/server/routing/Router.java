@@ -4,8 +4,11 @@ import ru.git.ivanv_lab.server.filter.IFilter;
 import ru.git.ivanv_lab.server.http.request.HttpRequest;
 import ru.git.ivanv_lab.server.http.response.HttpResponse;
 import ru.git.ivanv_lab.server.middleware.IMiddleware;
+import ru.git.ivanv_lab.server.routing.search.controller.ControllerMethod;
 import ru.git.ivanv_lab.server.routing.search.controller.ControllerSearcher;
+import ru.git.ivanv_lab.server.routing.search.controller.HttpMethodPath;
 
+import java.util.Map;
 import java.util.Set;
 
 public class Router implements IRouter{
@@ -19,9 +22,11 @@ public class Router implements IRouter{
         this.filters = filters;
     }
 
-
     @Override
     public HttpResponse routeRequest(HttpRequest request) {
-        return null;
+        Map<HttpMethodPath, ControllerMethod> pathMap = controllerSearcher.getPathMap();
+        ControllerMethod targetMethod = pathMap.get(new HttpMethodPath(request.getMethod(), request.getPath()));
+
+        targetMethod.method().invoke();
     }
 }
